@@ -38,7 +38,6 @@
 
             <a class="glyphicon glyphicon-log-in my-pull-right navbar-icon visible-xs underline-lg" href=#> </a>
 
-
             <ul class="my-pull-right nav navbar-nav hidden-xs">
                 <li>
                     <a href="#">Вход</a>
@@ -54,7 +53,6 @@
                 <div class="jp-audio-stream" id="jp_container_1">
                     <div class="jp-type-single">
                         <div class="jp-gui jp-interface">
-
                             <ul class="jp-controls ">
                                 <li id="loading-player">
                                 </li>
@@ -124,7 +122,6 @@
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
-
         <!-- Full Width Image Header with Logo -->
         <!-- Image backgrounds are set within the full-width-pics.css file. -->
         <div id="page-content-wrapper">
@@ -145,16 +142,7 @@
                 <p>&copy; 2016 - Stay Fit Fitness App</p>
             </footer>
         </div>
-
-
-
-
-
-        <!-- Footer -->
-
     </div>
-
-
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -167,11 +155,11 @@
 
     <!--Jplayer-->
     <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+
+    <!--My scripts-->
     <script type="text/javascript">
-        //spin.js arguments
-
-
-        $(document).ready(function() {
+        $(document).ready(function () {
+            //spin.js arguments
             var opts = {
                 lines: 8, // The number of lines to draw
                 length: 3, // The length of each line
@@ -183,26 +171,25 @@
             var spinner = new Spinner(opts);
             var target = document.getElementById("loading-player");
 
+            //jplayer
             var stream = {
-                    mp3: "http://193.108.24.21:8000/fresh"
-                },
-                ready = false;
+                mp3: "http://193.108.24.21:8000/fresh"
+            },
+            ready = false;
 
             $("#jquery_jplayer_1").jPlayer({
-
-                ready: function(event) {
+                ready: function (event) {
                     ready = true;
                     $(this).jPlayer("setMedia", stream);
                 },
-                pause: function() {
+                pause: function () {
                     spinner.stop(target);
-                    //$('#loadplayer').after(spinner.spin().el);
                     $(this).jPlayer("clearMedia");
                 },
-                waiting: function() {
+                waiting: function () {
                     spinner.spin(target);
                 },
-                error: function(event) {
+                error: function (event) {
                     if (ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
                         // Setup the media stream again and play it.
                         $(this).jPlayer("setMedia", stream).jPlayer("play");
@@ -213,7 +200,7 @@
                 preload: "none",
                 wmode: "window",
                 keyEnabled: true,
-                progress: function() {
+                progress: function () {
                     spinner.stop(target);
                 }
             });
@@ -222,12 +209,11 @@
 
     <!-- Sidebar Toggle Script -->
     <script>
-        $("#menu-toggle").click(function(e) {
+        $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-
 
 </body>
 
