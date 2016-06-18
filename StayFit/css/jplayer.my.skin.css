@@ -1,0 +1,260 @@
+div.jp-audio,
+div.jp-audio-stream {
+    /* Edit the font-size to counteract inherited font sizing.
+	 * Eg. 1.25em = 1 / 0.8em
+	 */
+    font-size: 1.25em;
+    /* 1.25em for testing in site pages */
+    /* No parent CSS that can effect the size in the demos ZIP */
+    font-family: 'Open Sans', Arial, sans-serif;
+    line-height: 1.6;
+    color: #666;
+}
+
+div.jp-audio {
+    width: auto;
+}
+
+div.jp-audio-stream {
+    width: auto;
+}
+
+
+/* @group CONTROLS */
+
+div.jp-interface ul.jp-controls {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: 0px;
+    overflow: hidden;
+}
+
+div.jp-video ul.jp-controls,
+div.jp-interface ul.jp-controls li {
+    display: inline;
+    float: left;
+}
+
+a.jp-play,
+a.jp-pause {
+    color: #EC5B32;
+    display: block;
+    width: auto;
+    height: auto;
+    line-height: normal;
+    border-radius: 50%;
+}
+
+a.jp-play {
+    /*background: url("jplayer.blue.monday.jpg") 0 0 no-repeat;*/
+}
+
+a.jp-pause {
+    /*background: url("jplayer.blue.monday.jpg") 0 -42px no-repeat;*/
+}
+
+
+a.jp-stop,
+a.jp-previous,
+a.jp-next {
+    width: 28px;
+    height: 28px;
+    margin-top: 6px;
+}
+
+a.jp-stop {
+    margin-left: 10px;
+}
+
+
+/* @end */
+
+
+/* @group progress bar */
+
+div.jp-progress {
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+div.jp-audio div.jp-progress {
+    position: absolute;
+    top: 32px;
+    height: 15px;
+}
+
+div.jp-audio div.jp-type-single div.jp-progress {
+    left: 110px;
+    width: 120px;
+}
+
+div.jp-audio div.jp-type-playlist div.jp-progress {
+    left: 166px;
+    width: 130px;
+}
+
+div.jp-video div.jp-progress {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 10px;
+}
+
+div.jp-seek-bar {
+    width: 0px;
+    height: 100%;
+    cursor: pointer;
+}
+
+div.jp-play-bar {
+    width: 0px;
+    height: 100%;
+}
+
+
+/* @end */
+
+
+/* @group volume controls */
+
+li.jp-player-info-wrap {
+    width: 230px;
+}
+
+div.jp-secondary-controls-wrap {
+    width: 230px;
+    display: block;
+    float: left;
+    padding-left: 10px;
+}
+
+div.jp-artist-wrap {
+    padding-top: 5px;
+}
+
+div.jp-volume-wrap {
+    padding-top: 0px;
+}
+
+div.jp-artist-wrap,
+div.jp-volume-wrap {
+    float: left;
+    display: block;
+    width: 100%;
+}
+
+div.jp-playlist-wrap {
+    width: auto;
+}
+
+div.jp-mute-wrap,
+div.jp-vmax-wrap {
+    width: 20px;
+}
+
+div.jp-playlist-wrap,
+div.jp-mute-wrap,
+div.jp-vmax-wrap {
+    height: 20px;
+    line-height: 20px;
+    float: left;
+    display: block;
+}
+
+
+
+div.jp-vmax-wrap {
+    line-height: 21px;
+}
+
+div.jp-now-playing,
+div.jp-volume-bar-wrap {
+    width: 128px;
+    float: left;
+    display: block;
+    line-height: 11px;
+    height: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+div.jp-now-playing {
+    margin-top: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+div.jp-volume-bar-wrap {
+    margin-right: 10px;
+    margin-bottom: 9px;
+}
+
+div.jp-mute-wrap> a> div.glyphicon,
+div.jp-playlist-wrap> div.entypo-list,
+div.jp-vmax-wrap> a> div.glyphicon {
+    color: #EC5B32;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+
+div.jp-mute-wrap> a,
+div.jp-playlist-wrap> a,
+div.jp-vmax-wrap> a {
+    cursor: pointer;
+}
+
+#now-on-the-radio {
+    font-size: 13px;
+    font-weight: 300;
+    color: #E1E1E1;
+    position: absolute;
+    left: 500px;
+}
+
+div.now-playing-wrap {
+    width: 760px;
+    position: absolute;
+    left: -275px;
+    top: 0;
+    height: 20px;
+    display: block;
+}
+
+div.jp-volume-bar-value {
+    background: #EC5B32;
+    width: 0px;
+    height: 5px;
+}
+
+div.jp-volume-bar {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    background: transparent;
+    border: none;
+    height: 20px;
+    padding: 6px 0px 30px;
+    cursor: pointer;
+}
+
+div.jp-volume-inside-bar {
+    position: relative;
+    overflow: hidden;
+    background: #232323;
+    border: 1px solid #AB3125;
+    width: 100%;
+    height: 7px;
+}
+
+div.jp-playlist-wrap> a> div.fa {
+    color: #EC5B32;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+}
+
+
+/* @end */
+
