@@ -21,6 +21,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "StayFit", "StayFit\", "{88A
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "2525"
+		SlnRelativePath = "StayFit\"
 	EndProjectSection
 EndProject
 Global
