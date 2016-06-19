@@ -71,7 +71,7 @@
                                 <!-- CURRENT ARTIST, SONG AND VOLUME CONTROLS -->
                                 <li class="jp-player-info-wrap hidden-xs">
                                     <div class="jp-secondary-controls-wrap">
-                                        <div style="font-size:10pt">radio Fresh!</div>
+                                        <div style="font-size:10pt">radio nova</div>
                                         <div class="jp-volume-wrap">
                                             <div class="jp-mute-wrap">
                                                 <a class="jp-mute">
@@ -114,7 +114,7 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li>
-                    <a href="#">Упражнения</a>
+                    <a href="#" id="exercises">Упражнения</a>
                 </li>
                 <li>
                     <a href="#">Програми</a>
@@ -125,17 +125,8 @@
         <!-- Full Width Image Header with Logo -->
         <!-- Image backgrounds are set within the full-width-pics.css file. -->
         <div id="page-content-wrapper">
-            <section>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12" style="text-align:center">
-                            <h1 class="section-heading">Измислянето на оправдания гори по <strong>0</strong> калории на час!</h1>
-                            <p class="lead section-lead">Моля, <a href="#">влезте</a> или се <a href="#">регистрирайте</a></p>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container -->
+            <section id="content">
+                    
             </section>
             <footer>
                 <hr>
@@ -173,7 +164,7 @@
 
             //jplayer
             var stream = {
-                mp3: "http://193.108.24.21:8000/fresh"
+                oga: "http://stream.metacast.eu/nova.ogg"
             },
             ready = false;
 
@@ -196,7 +187,7 @@
                     }
                 },
                 swfPath: "js",
-                supplied: "mp3",
+                supplied: "oga",
                 preload: "none",
                 wmode: "window",
                 keyEnabled: true,
@@ -204,6 +195,9 @@
                     spinner.stop(target);
                 }
             });
+        });
+        $("#exercises").cilck(function () {
+            $("#content").load("exercises.html");
         });
     </script>
 
@@ -214,6 +208,11 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
+
+    <!-- Knockout -->
+    <script src="js/knockout-3.4.0.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/site.js"></script>
 
 </body>
 
