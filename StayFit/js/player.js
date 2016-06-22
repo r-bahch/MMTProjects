@@ -16,7 +16,7 @@ $(document).ready(function () {
 
     //jplayer
     var stream = {
-        oga: "http://stream.metacast.eu/veronika.ogg"
+        oga: "http://stream.metacast.eu/nova.ogg"
     },
     ready = false;
 
