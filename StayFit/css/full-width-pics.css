@@ -64,6 +64,7 @@ footer {
         padding-top: 25px;
         padding-bottom: 25px;
     }
+
     .section-heading {
         font-size: 2em;
     }
@@ -80,9 +81,9 @@ footer {
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled {
-    padding-left: 160px;
-}
+    #wrapper.toggled {
+        padding-left: 160px;
+    }
 
 #sidebar-wrapper {
     z-index: 1000;
@@ -127,60 +128,64 @@ footer {
     list-style: none;
 }
 
-.sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
-}
+    .sidebar-nav li {
+        text-indent: 20px;
+        line-height: 40px;
+    }
 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+        }
 
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-}
+            .sidebar-nav li a:hover {
+                text-decoration: none;
+                color: #fff;
+                background: rgba(255, 255, 255, 0.2);
+            }
 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
+            .sidebar-nav li a:active,
+            .sidebar-nav li a:focus {
+                text-decoration: none;
+            }
 
-.sidebar-nav> .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        font-size: 18px;
+        line-height: 60px;
+    }
 
-.sidebar-nav> .sidebar-brand a {
-    color: #999999;
-}
+        .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+        }
 
-.sidebar-nav> .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
+            .sidebar-nav > .sidebar-brand a:hover {
+                color: #fff;
+                background: none;
+            }
 
 @media(min-width:768px) {
     #wrapper {
         padding-left: 160px;
     }
-    #wrapper.toggled {
-        padding-left: 0;
-    }
+
+        #wrapper.toggled {
+            padding-left: 0;
+        }
+
     #sidebar-wrapper {
         width: 160px;
     }
+
     #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
+
     #page-content-wrapper {
-        padding: 20px;
         position: relative;
     }
+
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
@@ -202,16 +207,16 @@ footer {
     padding: 1px;
 }
 
-.navbar-brand>img {
-    height: 100%;
-    width: auto;
-}
+    .navbar-brand > img {
+        height: 100%;
+        width: auto;
+    }
 
 #loading-player {
     position: relative;
     width: 40px;
     height: 50px;
-    margin:0px;
+    margin: 0px;
 }
 
 .navbar-icon {
@@ -244,7 +249,100 @@ footer {
 
 @media (min-width: 767px) {
     .underline-lg:hover {
-        text-decoration: underline;
+        text-decoration: underline !important;
     }
 }
 
+h2 {
+    margin-top: 0px;
+}
+
+
+.video-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+.schedule-list {
+    background-color: #333;
+    color: #cacaca;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+
+/*SIGN IN FORM*/
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+    .form-signin .form-signin-heading,
+    .form-signin .checkbox {
+        margin-bottom: 10px;
+    }
+
+    .form-signin .checkbox {
+        font-weight: normal;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+    .form-signin input[type="email"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .form-signin button {
+        margin: 10px 0px;
+    }
+
+    .form-signin a {
+        font-size: 18px;
+        text-align:center;
+    }
+/* endof SIGN IN FORM*/
+
+.btn-primary {
+    color:#999999;
+    background-color: #333;
+    border-color: #1f1f1f;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #333;
+    border-color: #333;
+}

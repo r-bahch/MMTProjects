@@ -36,15 +36,19 @@
 
             <a class="navbar-brand" href="#"><img src="img/logo.png" /></a>
 
-            <a class="glyphicon glyphicon-log-in my-pull-right navbar-icon visible-xs underline-lg" href=#> </a>
+            <a data-bind="visible: !isLoggedIn()" class="glyphicon glyphicon-log-in my-pull-right navbar-icon visible-xs underline-lg" href=#login> </a>
+            <a data-bind="visible: isLoggedIn()" onclick="logout()" class="glyphicon glyphicon-log-out my-pull-right navbar-icon visible-xs underline-lg" href=#logout> </a>
 
             <ul class="my-pull-right nav navbar-nav hidden-xs">
-                <li>
-                    <a href="#">Вход</a>
+                <li data-bind="visible: !isLoggedIn()">
+                    <a href="#login">Вход</a>
                 </li>
-                <li>
-                    <a href="#">Регистрация</a>
+                <li data-bind="visible: !isLoggedIn()">
+                    <a href="#register">Регистрация</a>
                 </li>
+                <li data-bind="visible: isLoggedIn()">
+                    <a href="#logout" onclick="logout()">Изход</a>
+                </li>"
             </ul>
 
             <!--Audio Player-->
@@ -59,7 +63,7 @@
                                 <!-- PLAY -->
                                 <li>
                                     <a tabindex="1" class="jp-play" href="javascript:;">
-                                        <div class=" glyphicon glyphicon-play underline-lg navbar-icon"></div>
+                                        <div class="glyphicon glyphicon-play underline-lg navbar-icon"></div>
                                     </a>
                                 </li>
                                 <!-- PAUSE -->
@@ -114,20 +118,129 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li>
-                    <a href="#" id="exercises">Упражнения</a>
+                    <a href="#exercises">Упражнения</a>
                 </li>
-                <li>
-                    <a href="#">Програми</a>
+                <li data-bind="visible: isLoggedIn">
+                    <div id="div1" ondragover="goToSchedule()">
+                        <a href="#schedule">Програма</a>
+                    </div>
                 </li>
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
         <!-- Full Width Image Header with Logo -->
         <!-- Image backgrounds are set within the full-width-pics.css file. -->
-        <div id="page-content-wrapper">
-            <section id="content">
-                    
-            </section>
+        <div id="page-content-wrapper" style="padding-left:20px">
+            <div data-bind="stopBinding: true">
+                <div id="exercises" style="display:none">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <h2 style="display:inline-block;">Упражнения</h2>
+                            <p style="display:inline-block; padding-left:50px;">
+                                Мускулна група:
+                                <select class="form-control" style="display:inline-block; width:auto;" data-bind="options: uniqueMuscleGroups,
+                       value: selectedMuscleGroup,
+                       optionsCaption: 'Всички'"></select>
+                            </p>
+
+                            <table class="table table-hover" data-bind="foreach: selectedMuscleGroup() ? availableExercises().filter(function(el) {return el.muscleGroup==selectedMuscleGroup();}) : availableExercises()">
+                                <tbody>
+                                    <tr draggable="true" ondragstart="drag(event)" class="clickable-row" data-bind="attr: {'data-href': '#exercises/' + id, ondragstart: 'drag(event,' + id +')'}">
+                                        <td style="display:none" data-bind="text: id"></td>
+                                        <td><img class="img-fluid img-circle" data-bind="attr: {src: 'img/exercises/thumbs/' + id + '_tn.jpg'}" alt="" /></td>
+                                        <td><a data-bind="attr: {href: '#exercises/' + id}, text: name"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="home" style="display:none">
+                    <section>
+                        <div class="row">
+                            <div class="col-lg-12" style="text-align:center">
+                                <h1 class="section-heading">Измислянето на оправдания гори по <strong>0</strong> калории на час!</h1>
+                                <p class="lead section-lead">Моля, <a href="#login">влезте</a> или се <a href="#register">регистрирайте</a></p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div id="exercise" data-bind="with:exerciseData" style="display:none">
+                    <div class="row">
+                        <h1 data-bind="text: name" style="margin-bottom:30px"></h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 text-center">
+                            <img class="img-fluid img-rounded img-center" data-bind="attr: {src: 'img/exercises/originals/' + id + '.jpg'}" alt="" />
+                            <div class="video-wrapper">
+                                <iframe data-bind="attr: {src : videoUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <span data-bind="html: description"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="schedule">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 style="display:inline-block; ">Моята Програма </h2>
+                            <button style="display:inline-block; margin-left:20px; margin-bottom:20px" class="btn btn-primary">Запази</button>
+                            <ul class="list-inline" data-bind="foreach: schedule">
+                                <li ondragover="allowDrop(event)" data-bind="attr: {ondrop:'drop(event,'+ $index() + ')'}" class="schedule-list">
+                                    <h3 data-bind="text: name"></h3>
+                                    <table class="table" style="width:150px" data-bind="foreach: $data.exercises">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a data-bind="text: name, attr:{href: '#exercises/'+id}"></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="login" style="display:none">
+                <section>
+                    <div class="container text-center">
+                        <form class="form-signin" action="#schedule">
+                            <h2 class="form-signin-heading">Вход</h2>
+                            <input type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
+                            <input type="password" id="inputPassword" class="form-control" placeholder="парола" required="">
+                            <button onclick="login()" class="btn btn-lg btn-primary btn-block">Вход</button>
+                            <a href="#register">Регистрация</a>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
+            <div id="register" style="display:none">
+                <section>
+                    <div class="container text-center">
+                        <form class="form-signin" action="#login">
+                            <h2 class="form-signin-heading">Регистрация</h2>
+                            <input type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
+                            <input type="email" id="email" class="form-control" placeholder="e-mail адрес" required="" autofocus="">
+                            <input type="password" id="password" class="form-control" placeholder="парола" required="">
+                            <input type="password" id="passwordConfirm" class="form-control" placeholder="парола" required="">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Давай, давай</button>
+                            <a href="#login">Имате регистрация? <br />Вход</a>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
             <footer>
                 <hr>
                 <p>&copy; 2016 - Stay Fit Fitness App</p>
@@ -136,84 +249,32 @@
     </div>
 
     <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
+    <script src="js/lib/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/lib/bootstrap.min.js"></script>
     <!-- Player loading wheel -->
-    <script src="js/spin.min.js"></script>
-
+    <script src="js/lib/spin.min.js"></script>
     <!--Jplayer-->
-    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+    <script src="js/lib/jquery.jplayer.min.js"></script>
+    <!-- Knockout -->
+    <script src="js/lib/knockout-3.4.0.js"></script>
+    <!-- Sammy (Navigation) -->
+    <script src="js/lib/sammy-latest.min.js"></script>
+
 
     <!--My scripts-->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            //spin.js arguments
-            var opts = {
-                lines: 8, // The number of lines to draw
-                length: 3, // The length of each line
-                width: 5, // The line thickness
-                radius: 8, // The radius of the inner circle
-                color: '#EC5B32', // #rgb or #rrggbb or array of colors
-                speed: 1 // Rounds per second
-            }
-            var spinner = new Spinner(opts);
-            var target = document.getElementById("loading-player");
+    <script src="js/player.js"></script>
+    <script src="js/sidebar.js"></script>
+    <script src="js/scripts.js"></script>
 
-            //jplayer
-            var stream = {
-                oga: "http://stream.metacast.eu/nova.ogg"
-            },
-            ready = false;
+    <!-- KO -->
+    <!--<script src="js/ko/main.js"></script>-->
+    <script src="js/ko/exercises.js"></script>
+    <script src="js/ko/exercise.js"></script>
+    <script src="js/ko/schedule.js"></script>
+    <script src="js/ko/main.js"></script>
 
-            $("#jquery_jplayer_1").jPlayer({
-                ready: function (event) {
-                    ready = true;
-                    $(this).jPlayer("setMedia", stream);
-                },
-                pause: function () {
-                    spinner.stop(target);
-                    $(this).jPlayer("clearMedia");
-                },
-                waiting: function () {
-                    spinner.spin(target);
-                },
-                error: function (event) {
-                    if (ready && event.jPlayer.error.type === $.jPlayer.error.URL_NOT_SET) {
-                        // Setup the media stream again and play it.
-                        $(this).jPlayer("setMedia", stream).jPlayer("play");
-                    }
-                },
-                swfPath: "js",
-                supplied: "oga",
-                preload: "none",
-                wmode: "window",
-                keyEnabled: true,
-                progress: function () {
-                    spinner.stop(target);
-                }
-            });
-        });
-        $("#exercises").cilck(function () {
-            $("#content").load("exercises.html");
-        });
-    </script>
-
-    <!-- Sidebar Toggle Script -->
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
-    <!-- Knockout -->
-    <script src="js/knockout-3.4.0.js"></script>
-    <script src="js/models.js"></script>
-    <script src="js/site.js"></script>
-
+    <script src="js/ko/routing.js"></script>
 </body>
 
 </html>
