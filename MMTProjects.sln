@@ -24,6 +24,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "StayFit", "StayFit\", "{88A
 		SlnRelativePath = "StayFit\"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StayFitAPI", "StayFitAPI\StayFitAPI.csproj", "{FB2EF443-FDE3-4707-912B-A0027126CFC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{88A7DC29-21B7-41AF-86D7-7E192CEFE650}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88A7DC29-21B7-41AF-86D7-7E192CEFE650}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{88A7DC29-21B7-41AF-86D7-7E192CEFE650}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FB2EF443-FDE3-4707-912B-A0027126CFC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB2EF443-FDE3-4707-912B-A0027126CFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB2EF443-FDE3-4707-912B-A0027126CFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB2EF443-FDE3-4707-912B-A0027126CFC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

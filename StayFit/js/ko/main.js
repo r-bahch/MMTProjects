@@ -1,8 +1,17 @@
 ﻿var mainViewModel = function () {
     var self = this;
-    self.isLoggedIn = ko.observable(false);
-    
-    self.kur = ko.observable("kur");
+    self.token = ko.observable();
+    self.Name = ko.observable();
+    self.isLoggedIn = ko.observable(localStorage.getItem('token') !== null);
+    self.Name = ko.observable(localStorage.getItem('Name'));
+
+    self.logout = function () {
+        self.isLoggedIn(false);
+        self.Name(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('Name');
+        document.location.hash = "#";
+    }
 }
 
 ko.bindingHandlers.stopBinding = {
@@ -14,14 +23,3 @@ ko.bindingHandlers.stopBinding = {
 var mainVM = new mainViewModel();
 ko.applyBindings(mainVM);
 
-function login() {
-    mainVM.isLoggedIn(true);
-}
-
-function logout() {
-    mainVM.isLoggedIn(false);
-}
-
-function displayControls(id) {
-    window.alert(id);
-}

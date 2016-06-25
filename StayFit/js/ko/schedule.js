@@ -25,7 +25,7 @@ var Day = function (name) {
     self.name = name;
     self.exercises = ko.observableArray();
     self.addExercise = function (id) {
-        self.exercises.push(jQuery.grep(exercisesArray, function (ex) { return id == ex.id; }).pop());
+        self.exercises.push(jQuery.grep(exercisesVM.availableExercises(), function (ex) { return id == ex.ID; }).pop());
     }
 }
 

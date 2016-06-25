@@ -20,3 +20,5 @@ function drop(ev, dayIndex) {
     var data = ev.dataTransfer.getData("text");
     scheduleVM.schedule()[dayIndex].addExercise(data);
 }
+
+var apiserver = "http://localhost:1272"

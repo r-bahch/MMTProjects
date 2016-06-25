@@ -34,10 +34,10 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#"><img src="img/logo.png" /></a>
+            <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Stay Fit"/></a>
 
             <a data-bind="visible: !isLoggedIn()" class="glyphicon glyphicon-log-in my-pull-right navbar-icon visible-xs underline-lg" href=#login> </a>
-            <a data-bind="visible: isLoggedIn()" onclick="logout()" class="glyphicon glyphicon-log-out my-pull-right navbar-icon visible-xs underline-lg" href=#logout> </a>
+            <a data-bind="visible: isLoggedIn(), click:logout" class="glyphicon glyphicon-log-out my-pull-right navbar-icon visible-xs underline-lg" href=#logout> </a>
 
             <ul class="my-pull-right nav navbar-nav hidden-xs">
                 <li data-bind="visible: !isLoggedIn()">
@@ -47,7 +47,8 @@
                     <a href="#register">Регистрация</a>
                 </li>
                 <li data-bind="visible: isLoggedIn()">
-                    <a href="#logout" onclick="logout()">Изход</a>
+                    <span data-bind="text: Name" style="display:inline-block; color:#9d9d9d"></span>
+                    <a href="#logout" data-bind="click:logout"  style="display:inline-block">Изход</a>
                 </li>"
             </ul>
 
@@ -131,6 +132,17 @@
         <!-- Full Width Image Header with Logo -->
         <!-- Image backgrounds are set within the full-width-pics.css file. -->
         <div id="page-content-wrapper" style="padding-left:20px">
+            <div id="home" style="display:none">
+                <section>
+                    <div class="row">
+                        <div class="col-lg-12" style="text-align:center">
+                            <h1 class="section-heading">Измислянето на оправдания изгаря по <strong>0</strong> калории на час!</h1>
+                            <p data-bind="visible: !isLoggedIn()" class="lead section-lead">Моля, <a href="#login">влезте</a> или се <a href="#register">регистрирайте</a></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
             <div data-bind="stopBinding: true">
                 <div id="exercises" style="display:none">
                     <div class="row">
@@ -143,12 +155,12 @@
                        optionsCaption: 'Всички'"></select>
                             </p>
 
-                            <table class="table table-hover" data-bind="foreach: selectedMuscleGroup() ? availableExercises().filter(function(el) {return el.muscleGroup==selectedMuscleGroup();}) : availableExercises()">
+                            <table class="table table-hover" data-bind="foreach: selectedMuscleGroup() ? availableExercises().filter(function(el) {return el.MuscleGroup==selectedMuscleGroup();}) : availableExercises()">
                                 <tbody>
-                                    <tr draggable="true" ondragstart="drag(event)" class="clickable-row" data-bind="attr: {'data-href': '#exercises/' + id, ondragstart: 'drag(event,' + id +')'}">
-                                        <td style="display:none" data-bind="text: id"></td>
-                                        <td><img class="img-fluid img-circle" data-bind="attr: {src: 'img/exercises/thumbs/' + id + '_tn.jpg'}" alt="" /></td>
-                                        <td><a data-bind="attr: {href: '#exercises/' + id}, text: name"></a></td>
+                                    <tr draggable="true" ondragstart="drag(event)" class="clickable-row" data-bind="attr: {'data-href': '#exercises/' + ID, ondragstart: 'drag(event,' + ID +')'}">
+                                        <td style="display:none" data-bind="text: ID"></td>
+                                        <td><img class="img-fluid img-circle" data-bind="attr: {src: 'img/exercises/thumbs/' + ID + '_tn.jpg'}" alt="" /></td>
+                                        <td><a data-bind="attr: {href: '#exercises/' + ID}, text: Name"></a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -156,30 +168,21 @@
                     </div>
                 </div>
 
-                <div id="home" style="display:none">
-                    <section>
-                        <div class="row">
-                            <div class="col-lg-12" style="text-align:center">
-                                <h1 class="section-heading">Измислянето на оправдания изгаря по <strong>0</strong> калории на час!</h1>
-                                <p class="lead section-lead">Моля, <a href="#login">влезте</a> или се <a href="#register">регистрирайте</a></p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+                
 
-                <div id="exercise" data-bind="with:exerciseData" style="display:none">
+                <div id="exercise" data-bind="with:exerciseData()" style="display:none">
                     <div class="row">
-                        <h1 data-bind="text: name" style="margin-bottom:30px"></h1>
+                        <h1 data-bind="html: Name + ' <small> Мускулна група: ' + MuscleGroup + '</small>'" style="margin-bottom:30px"></h1>
                     </div>
                     <div class="row">
                         <div class="col-lg-5 text-center">
-                            <img class="img-fluid img-rounded img-center" data-bind="attr: {src: 'img/exercises/originals/' + id + '.jpg'}" alt="" />
+                            <img class="img-fluid img-rounded img-center" data-bind="attr: {src: 'img/exercises/originals/' + ID + '.jpg'}" alt="" />
                             <div class="video-wrapper">
-                                <iframe data-bind="attr: {src : videoUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                                <iframe data-bind="attr: {src : VideoUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <span data-bind="html: description"></span>
+                            <span data-bind="html: Description"></span>
                         </div>
                     </div>
                 </div>
@@ -208,38 +211,56 @@
                         </div>
                     </div>
                 </div>
+
+                <div id="login" style="display:none">
+                    <section>
+                        <div class="container text-center">
+
+                            <form class="form-signin" method="post" action="#login">
+                                <h2 class="form-signin-heading">Вход</h2>
+                                <div class="alert alert-danger" data-bind="visible: errorMessage() !== undefined">
+                                    <strong>Грешка:</strong> <span data-bind="text: errorMessage()"></span>
+                                </div>
+                                <div class="alert alert-success" data-bind="visible: message() !== undefined">
+                                    <span data-bind="text: message()"></span>
+                                </div>
+                                <input data-bind="value:email" type="email" id="email" class="form-control" placeholder="e-mail" required autofocus="">
+                                <input data-bind="value:password" type="password" id="inputPassword" class="form-control" placeholder="парола" required>
+                                <button type="submit" class="btn btn-lg btn-primary btn-block">Вход</button>
+                                <a href="#register">Регистрация</a>
+                            </form>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div id="register" style="display:none">
+                    <section>
+                        <div class="container text-center">
+                            <form class="form-signin" method="post" action="#register">
+                                <h2 class="form-signin-heading">Регистрация</h2>
+                                <div data-bind="foreach: errorMessages">
+                                    <div class="alert alert-danger">
+                                        <strong>Грешка:</strong> <span data-bind="text: $data[0]"></span>
+                                    </div>
+                                </div>
+                                <input data-bind="value: email" type="email" id="email" class="form-control" placeholder="e-mail" required="" autofocus="">
+                                <input data-bind="value: userName" type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
+                                <input data-bind="value: password" type="password" id="password" class="form-control" placeholder="парола" required="">
+                                <input data-bind="value: passwordConfirm" type="password" id="passwordConfirm" class="form-control" placeholder="парола" required="">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
+                                <a href="#login">Имате регистрация? <br />Вход</a>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+
             </div>
 
 
-            <div id="login" style="display:none">
-                <section>
-                    <div class="container text-center">
-                        <form class="form-signin" action="#schedule">
-                            <h2 class="form-signin-heading">Вход</h2>
-                            <input type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
-                            <input type="password" id="inputPassword" class="form-control" placeholder="парола" required="">
-                            <button onclick="login()" class="btn btn-lg btn-primary btn-block">Вход</button>
-                            <a href="#register">Регистрация</a>
-                        </form>
-                    </div>
-                </section>
-            </div>
 
-            <div id="register" style="display:none">
-                <section>
-                    <div class="container text-center">
-                        <form class="form-signin" action="#login">
-                            <h2 class="form-signin-heading">Регистрация</h2>
-                            <input type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
-                            <input type="email" id="email" class="form-control" placeholder="e-mail адрес" required="" autofocus="">
-                            <input type="password" id="password" class="form-control" placeholder="парола" required="">
-                            <input type="password" id="passwordConfirm" class="form-control" placeholder="парола" required="">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
-                            <a href="#login">Имате регистрация? <br />Вход</a>
-                        </form>
-                    </div>
-                </section>
-            </div>
+
+
 
             <footer>
                 <hr>
@@ -272,7 +293,9 @@
     <script src="js/ko/exercises.js"></script>
     <script src="js/ko/exercise.js"></script>
     <script src="js/ko/schedule.js"></script>
+    <script src="js/ko/login.js"></script>
     <script src="js/ko/main.js"></script>
+    <script src="js/ko/register.js"></script>
 
     <script src="js/ko/routing.js"></script>
 </body>
