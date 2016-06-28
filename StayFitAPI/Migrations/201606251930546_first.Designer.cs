@@ -13,7 +13,7 @@ namespace StayFitAPI.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201606251833511_first"; }
+            get { return "201606251930546_first"; }
         }
         
         string IMigrationMetadata.Source

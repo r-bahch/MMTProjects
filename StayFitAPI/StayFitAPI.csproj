@@ -252,12 +252,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DTOs\ExerciseDTO.cs" />
+    <Compile Include="DTOs\ScheduleDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201606251833511_first.cs" />
-    <Compile Include="Migrations\201606251833511_first.Designer.cs">
-      <DependentUpon>201606251833511_first.cs</DependentUpon>
+    <Compile Include="Migrations\201606251930546_first.cs" />
+    <Compile Include="Migrations\201606251930546_first.Designer.cs">
+      <DependentUpon>201606251930546_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -304,6 +305,8 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\stayfitapi %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\stayfitapi.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -345,8 +348,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201606251833511_first.resx">
-      <DependentUpon>201606251833511_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201606251930546_first.resx">
+      <DependentUpon>201606251930546_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -5,9 +5,6 @@ Sammy(function () {
         pages.forEach(function (page) {
             $(page).hide();
         })
-        $.getJSON(apiserver + "/api/exercises", function (data) {
-            exercisesVM.availableExercises(data);
-        });
         $('#exercises').fadeIn(150);
     });
 
@@ -30,11 +27,12 @@ Sammy(function () {
         }
     });
 
+
+
     this.get('#exercises/:id', function () {
-        exerciseVM.exerciseData(null);
+        exerciseVM.reset();
         $.getJSON(apiserver + "/api/exercises/" + this.params['id'], function (data) {
             exerciseVM.exerciseData(data);
-            console.log(exerciseVM.exerciseData());
         });
         pages.forEach(function (page) {
             $(page).hide();
@@ -76,11 +74,10 @@ Sammy(function () {
     });
 
     this.post('#register', function () {
-        console.log("routing");
         registerVM.register();
     });
 
     this.get('', function () {
-            this.app.runRoute('get', '#home')
+        this.app.runRoute('get', '#home')
     });
 }).run();

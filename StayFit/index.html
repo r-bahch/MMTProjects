@@ -13,9 +13,8 @@
     <!--Jplayer skin CSS -->
     <link href="css/jplayer.my.skin.css" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
-    <link href="css/full-width-pics.css" rel="stylesheet" type="text/css">
+    <link href="css/site.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -34,7 +33,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Stay Fit"/></a>
+            <a class="navbar-brand" href="#"><img src="img/logo.png" alt="Stay Fit" /></a>
 
             <a data-bind="visible: !isLoggedIn()" class="glyphicon glyphicon-log-in my-pull-right navbar-icon visible-xs underline-lg" href=#login> </a>
             <a data-bind="visible: isLoggedIn(), click:logout" class="glyphicon glyphicon-log-out my-pull-right navbar-icon visible-xs underline-lg" href=#logout> </a>
@@ -48,7 +47,7 @@
                 </li>
                 <li data-bind="visible: isLoggedIn()">
                     <span data-bind="text: Name" style="display:inline-block; color:#9d9d9d"></span>
-                    <a href="#logout" data-bind="click:logout"  style="display:inline-block">Изход</a>
+                    <a href="#logout" data-bind="click:logout" style="display:inline-block">Изход</a>
                 </li>"
             </ul>
 
@@ -122,7 +121,7 @@
                     <a href="#exercises">Упражнения</a>
                 </li>
                 <li data-bind="visible: isLoggedIn">
-                    <div id="div1" ondragover="goToSchedule()">
+                    <div id="div1" ondragover="document.location.hash = '#schedule'">
                         <a href="#schedule">Програма</a>
                     </div>
                 </li>
@@ -157,9 +156,9 @@
 
                             <table class="table table-hover" data-bind="foreach: selectedMuscleGroup() ? availableExercises().filter(function(el) {return el.MuscleGroup==selectedMuscleGroup();}) : availableExercises()">
                                 <tbody>
-                                    <tr draggable="true" ondragstart="drag(event)" class="clickable-row" data-bind="attr: {'data-href': '#exercises/' + ID, ondragstart: 'drag(event,' + ID +')'}">
+                                    <tr draggable="true" class="clickable-row" data-bind="attr: {'data-href': '#exercises/' + ID, ondragstart: 'drag(event,' + ID +')'}">
                                         <td style="display:none" data-bind="text: ID"></td>
-                                        <td><img class="img-fluid img-circle" data-bind="attr: {src: 'img/exercises/thumbs/' + ID + '_tn.jpg'}" alt="" /></td>
+                                        <td><img style="cursor:grab" class="img-fluid img-circle" data-bind="attr: {src: 'img/exercises/thumbs/' + ID + '_tn.jpg'}" alt="" /></td>
                                         <td><a data-bind="attr: {href: '#exercises/' + ID}, text: Name"></a></td>
                                     </tr>
                                 </tbody>
@@ -168,20 +167,39 @@
                     </div>
                 </div>
 
-                
+
 
                 <div id="exercise" data-bind="with:exerciseData()" style="display:none">
                     <div class="row">
-                        <h1 data-bind="html: Name + ' <small> Мускулна група: ' + MuscleGroup + '</small>'" style="margin-bottom:30px"></h1>
+                        <h1 data-bind="html: Name"></h1>
+
                     </div>
+
                     <div class="row">
-                        <div class="col-lg-5 text-center">
-                            <img class="img-fluid img-rounded img-center" data-bind="attr: {src: 'img/exercises/originals/' + ID + '.jpg'}" alt="" />
-                            <div class="video-wrapper">
-                                <iframe data-bind="attr: {src : VideoUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                        <div class="col-lg-5">
+                            <h4 data-bind="text: 'Мускулна група: ' + MuscleGroup"></h4>
+                            <ul data-bind="visible: mainVM.isLoggedIn" class="list-inline">
+                                <li><h4>Добави към програма </h4></li>
+                                <li>
+                                    <select class="form-control" style="display:inline-block; width:auto;" data-bind="options: scheduleVM.days,
+    value: exerciseVM.dayToAddTo,
+    optionsCaption: 'Избор на ден'"></select>
+                                </li>
+                                <li><button data-bind="visible: exerciseVM.dayToAddTo()!= undefined, click:exerciseVM.addToSchedule" class="btn btn-primary">Добавяне</button></li>
+                            </ul>
+                            <div class="alert alert-success text-center" data-bind="visible: exerciseVM.showMessage()">
+                                <span data-bind="html: 'Добавено към <strong>' + exerciseVM.dayAdded() + '!</strong>'"></span>
+                                <a href="#schedule">Към програмата</a>
+                            </div>
+                            <div class="text-center">
+                                <img class="img-fluid img-rounded img-center" data-bind="attr: {src: 'img/exercises/originals/' + ID + '.jpg'}" alt="" />
+                                <div class="video-wrapper">
+                                    <iframe data-bind="attr: {src : VideoUrl}" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-7">
+
                             <span data-bind="html: Description"></span>
                         </div>
                     </div>
@@ -190,16 +208,25 @@
                 <div id="schedule">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h2 style="display:inline-block; ">Моята Програма </h2>
-                            <button style="display:inline-block; margin-left:20px; margin-bottom:20px" class="btn btn-primary">Запази</button>
-                            <ul class="list-inline" data-bind="foreach: schedule">
-                                <li ondragover="allowDrop(event)" data-bind="attr: {ondrop:'drop(event,'+ $index() + ')'}" class="schedule-list">
-                                    <h3 data-bind="text: name"></h3>
-                                    <table class="table" style="width:150px" data-bind="foreach: $data.exercises">
+                            <h2 style="display:inline-block; margin-right:30px;">Моята Програма </h2>
+                            <button data-bind="click:postSchedule, visible: isEdited()" class="btn btn-primary" style="display:inline-block; margin-bottom:12px"><span class="glyphicon glyphicon-floppy-disk"></span> Запази</button>
+                            <button data-bind="click:getSchedule, visible: isEdited()" class="btn btn-primary" style="display:inline-block; margin-bottom:12px;"><span class="glyphicon glyphicon glyphicon-remove"></span> Отказ</button>
+                            <ul class="list-inline" id="schedule-edit" data-bind="css:{hidden: selectedExercise().Order < 0}">
+                                <li><button id="move-up" data-bind="click:moveUp," class="btn btn-primary"><span class="glyphicon glyphicon-chevron-up"></span></button></li>
+                                <li><button id="move-down" data-bind="click:moveDown" class="btn btn-primary"><span class="glyphicon glyphicon-chevron-down"></span></button></li>
+                                <li><button data-bind="click:del" class="btn btn-primary"><span class="glyphicon glyphicon-trash"></span></button></li>
+                                <li><button data-bind="click:goToEx" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open"></span></button></li>
+                                <li><button data-bind="click:initializeSelected" class="btn btn-primary">Отказ</button></li>
+                            </ul>
+                            <ul class="list-inline schedule-list" data-bind="foreach: schedule">
+                                <li ondragover="allowDrop(event)" data-bind="attr: {ondrop:'drop(event,'+ $index() + ')'}">
+                                    <h3 data-bind="text: scheduleVM.days[$index()]"></h3>
+                                    <table class="table" data-bind="foreach: $data">
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <a data-bind="text: name, attr:{href: '#exercises/'+id}"></a>
+                                                <td style="cursor:pointer" data-bind="css:{selected: $index() == scheduleVM.selectedExercise().Order && $parentContext.$index() == scheduleVM.selectedExercise().Day},
+    click: function () {scheduleVM.selectExercise($parentContext.$index(),$index())}">
+                                                    <span data-bind="text: ExerciseName, attr:{href: '#exercises/'+ExerciseID}"></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -217,13 +244,14 @@
                         <div class="container text-center">
 
                             <form class="form-signin" method="post" action="#login">
+                                <div class="alert alert-success" data-bind="visible: message() !== undefined">
+                                    <span data-bind="text: message()"></span>
+                                </div>
                                 <h2 class="form-signin-heading">Вход</h2>
                                 <div class="alert alert-danger" data-bind="visible: errorMessage() !== undefined">
                                     <strong>Грешка:</strong> <span data-bind="text: errorMessage()"></span>
                                 </div>
-                                <div class="alert alert-success" data-bind="visible: message() !== undefined">
-                                    <span data-bind="text: message()"></span>
-                                </div>
+
                                 <input data-bind="value:email" type="email" id="email" class="form-control" placeholder="e-mail" required autofocus="">
                                 <input data-bind="value:password" type="password" id="inputPassword" class="form-control" placeholder="парола" required>
                                 <button type="submit" class="btn btn-lg btn-primary btn-block">Вход</button>
@@ -245,9 +273,9 @@
                                     </div>
                                 </div>
                                 <input data-bind="value: email" type="email" id="email" class="form-control" placeholder="e-mail" required="" autofocus="">
-                                <input data-bind="value: userName" type="text" id="username" class="form-control" placeholder="потребителско име" required="" autofocus="">
+                                <input data-bind="value: userName" type="text" id="username" class="form-control" placeholder="име" required="" autofocus="">
                                 <input data-bind="value: password" type="password" id="password" class="form-control" placeholder="парола" required="">
-                                <input data-bind="value: passwordConfirm" type="password" id="passwordConfirm" class="form-control" placeholder="парола" required="">
+                                <input data-bind="value: passwordConfirm" type="password" id="passwordConfirm" class="form-control" placeholder="потвърдете паролата" required="">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
                                 <a href="#login">Имате регистрация? <br />Вход</a>
                             </form>
@@ -259,15 +287,17 @@
 
 
 
-
-
-
             <footer>
                 <hr>
                 <p>&copy; 2016 - Stay Fit Fitness App</p>
             </footer>
+
+            <!-- AJAX loading -->
+            <div id="ajax-loader"></div>
+
         </div>
     </div>
+
 
     <!-- jQuery -->
     <script src="js/lib/jquery.js"></script>

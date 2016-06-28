@@ -1,6 +1,5 @@
 ﻿var mainViewModel = function () {
     var self = this;
-    self.token = ko.observable();
     self.Name = ko.observable();
     self.isLoggedIn = ko.observable(localStorage.getItem('token') !== null);
     self.Name = ko.observable(localStorage.getItem('Name'));

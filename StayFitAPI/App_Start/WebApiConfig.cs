@@ -14,7 +14,7 @@ namespace StayFitAPI
         public static void Register(HttpConfiguration config)
         {
             // ENABLE CORS
-            var cors = new EnableCorsAttribute("*", "*", "*");
+            var cors = new EnableCorsAttribute( "*", "*", "*", "*");
             config.EnableCors(cors);
 
             // Web API configuration and services

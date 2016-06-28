@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using StayFitAPI.Models;
+using StayFitAPI.DTOs;
 using Microsoft.AspNet.Identity;
 
 namespace StayFitAPI.Controllers
@@ -18,19 +19,38 @@ namespace StayFitAPI.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/Schedule
-        public IQueryable<Schedule> GetSchedules()
+        //GET api/schedule
+        public List<Schedule2DTO>[] GetSchedule()
         {
-            var userId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId(); //get current user
             var schedule = from s in db.Schedules
+                           join e in db.Exercises on s.ExerciseID equals e.ID
                            where s.ApplicationUserID.Equals(userId)
-                           select s;
-            return schedule;
+                           orderby s.Order
+                           select new {
+                               ID = s.ID,
+                               ExerciseID = s.ExerciseID,
+                               ExerciseName = e.Name,
+                               Day = s.Day,
+                               Order = s.Order
+                           };
+            List<Schedule2DTO>[] result = new List<Schedule2DTO>[7];
+            for (int i = 0; i < 7; i++)
+            {
+                result[i] = new List<Schedule2DTO>();
+            }
+
+            foreach (var ex in schedule)
+            {
+                var sc = new Schedule2DTO { ExerciseID = ex.ExerciseID, ExerciseName = ex.ExerciseName };
+                result[(int)ex.Day].Add(sc);
+            }
+            return result;
         }
 
         // GET: api/Schedule/5
         [ResponseType(typeof(Schedule))]
-        public IHttpActionResult GetSchedule(string id)
+        public IHttpActionResult GetSchedule(int id)
         {
             Schedule schedule = db.Schedules.Find(id);
             if (schedule == null)
@@ -43,14 +63,14 @@ namespace StayFitAPI.Controllers
 
         // PUT: api/Schedule/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutSchedule(string id, Schedule schedule)
+        public IHttpActionResult PutSchedule(int id, Schedule schedule)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != schedule.ApplicationUserID)
+            if (id != schedule.ID)
             {
                 return BadRequest();
             }
@@ -78,37 +98,40 @@ namespace StayFitAPI.Controllers
 
         // POST: api/Schedule
         [ResponseType(typeof(Schedule))]
-        public IHttpActionResult PostSchedule(Schedule schedule)
+        public IHttpActionResult PostSchedule([FromBody] List<List<Schedule2DTO>> schedule)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var userId = User.Identity.GetUserId();
+            var oldScheduleQuery = from ex in db.Schedules
+                                   where ex.ApplicationUserID == userId
+                                   select ex;
+            db.Schedules.RemoveRange(oldScheduleQuery);
 
-            db.Schedules.Add(schedule);
-
-            try
+            for (int i = 0; i < schedule.Count; i++)
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (ScheduleExists(schedule.ApplicationUserID))
+                for (int j = 0; j < schedule[i].Count; j++)
                 {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
+                    db.Schedules.Add(new Schedule
+                    {
+                        ApplicationUserID = userId,
+                        ExerciseID = schedule[i][j].ExerciseID,
+                        Day = (DayOfWeek)i,
+                        Order = (byte)j
+                    });
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = schedule.ApplicationUserID }, schedule);
+            db.SaveChanges();
+
+            return Created("DefaultApi", schedule);
         }
 
         // DELETE: api/Schedule/5
         [ResponseType(typeof(Schedule))]
-        public IHttpActionResult DeleteSchedule(string id)
+        public IHttpActionResult DeleteSchedule(int id)
         {
             Schedule schedule = db.Schedules.Find(id);
             if (schedule == null)
@@ -131,9 +154,9 @@ namespace StayFitAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ScheduleExists(string id)
+        private bool ScheduleExists(int id)
         {
-            return db.Schedules.Count(e => e.ApplicationUserID == id) > 0;
+            return db.Schedules.Count(e => e.ID == id) > 0;
         }
     }
 }

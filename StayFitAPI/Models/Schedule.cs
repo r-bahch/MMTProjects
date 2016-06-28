@@ -7,19 +7,18 @@ using System.Web;
 
 namespace StayFitAPI.Models
 {
-    public enum DayOfWeek
-    {
-        Mon, Tue, Wed, Thu, Fri, Sat, Sun
-    }
-
+    
     public class Schedule
     {
-        [Key, Column(Order = 0)]
+        [Key]
+        public int ID { get; set; }
+
         public string ApplicationUserID { get; set; }
-        [Key, Column(Order = 1)]
         public int ExerciseID { get; set; }
 
+        [ForeignKey("ApplicationUserID")]
         public virtual ApplicationUser ApplicationUser { get; set; }
+        [ForeignKey("ExerciseID")]
         public virtual Exercise Exercise { get; set; }
 
         public DayOfWeek Day { get; set; }

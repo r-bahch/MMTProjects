@@ -1,22 +1,8 @@
 ﻿
 $(document).ready(function () {
-
-
-    //spin.js arguments
-    var opts = {
-        lines: 8, // The number of lines to draw
-        length: 3, // The length of each line
-        width: 5, // The line thickness
-        radius: 8, // The radius of the inner circle
-        color: '#EC5B32', // #rgb or #rrggbb or array of colors
-        speed: 1 // Rounds per second
-    }
-    var spinner = new Spinner(opts);
-    var target = document.getElementById("loading-player");
-
     //jplayer
     var stream = {
-        oga: "http://stream.metacast.eu/veronika.ogg"
+        oga: "http://stream.radioreklama.bg:80/veronika64"
     },
     ready = false;
 

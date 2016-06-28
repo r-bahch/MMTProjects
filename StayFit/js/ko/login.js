@@ -5,7 +5,7 @@
     self.errorMessage = ko.observable();
     self.message = ko.observable();
 
-    self.reset = function (){
+    self.reset = function () {
         self.email("")
         self.password("")
         self.errorMessage(undefined);
@@ -27,7 +27,7 @@
             mainVM.Name(data.Name);
             // Cache the access token in local storage.  
             localStorage.setItem('token', data.access_token);
-            localStorage.getItem('token');
+            scheduleVM.getSchedule();
             localStorage.setItem('Name', data.Name);
             localStorage.getItem('Name');
             mainVM.isLoggedIn(true);
@@ -40,5 +40,5 @@
 }
 
 loginVM = new loginViewModel();
-ko.applyBindings (loginVM, document.getElementById("login"));
+ko.applyBindings(loginVM, document.getElementById("login"));
 
